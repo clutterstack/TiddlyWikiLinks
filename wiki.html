@@ -587,7 +587,7 @@ Page Layout
 */
 
 .tc-section-branding {
-    padding: 1em 1em 0 1em;
+    padding: 3em 1em 0 1em;
     background-color: &lt;&lt;colour base-primary&gt;&gt;;
 }
 
@@ -657,11 +657,11 @@ Rich links
     background-color: &lt;&lt;colour base-tertiary&gt;&gt;;    
 }
 
-.tc-richlink-link-info {
+.tc-richlink-link-target {
     vertical-align: middle;
 }
 
-.tc-richlink-link-info svg {
+.tc-richlink-link-target svg {
     width: 1em;
     height: 1em;
 }
@@ -912,8 +912,8 @@ Parameters:
 --&gt;
 &lt;div class=&quot;tc-richlink-link&quot;&gt;
 &lt;$vars url={{{ [&lt;link-title&gt;get[url]] }}}&gt;
-&lt;a href=&lt;&lt;url&gt;&gt; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot; class=&quot;tc-richlink-link-target&quot; title=&lt;&lt;url&gt;&gt;&gt;&lt;$text text=&lt;&lt;url&gt;&gt;/&gt;&lt;/a&gt;
-&lt;a href={{{ [&lt;link-title&gt;get[url-hash]addprefix[urls/]addprefix&lt;tv-path-to-root&gt;] }}} class=&quot;tc-richlink-link-info&quot; title=&quot;Show link info&quot;&gt;{{$:/core/images/info-button}}&lt;/a&gt;
+&lt;a href={{{ [&lt;link-title&gt;get[url-hash]addprefix[urls/]addprefix&lt;tv-path-to-root&gt;] }}} class=&quot;tc-richlink-link-info&quot; title=&quot;Show link info&quot;&gt;&lt;$text text=&lt;&lt;url&gt;&gt;/&gt;&lt;/a&gt;
+&lt;a href=&lt;&lt;url&gt;&gt; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot; class=&quot;tc-richlink-link-target&quot; title=&lt;&lt;url&gt;&gt;&gt;{{$:/core/images/open-window}}&lt;/a&gt;
 &lt;/$vars&gt;
 &lt;/div&gt;
 </pre>
@@ -939,7 +939,7 @@ Parameters:
 &lt;a href={{{ [&lt;tv-path-to-root&gt;] }}}&gt;
 [img width=150 [$:/_Images/JackInLinks.svg]]
 &lt;span class=&quot;tc-section-branding-text&quot;&gt;
-links.tiddlywiki.com
+~TiddlyWikiLinks
 &lt;/span&gt;
 &lt;/a&gt;
 &lt;/header&gt;
@@ -954,12 +954,13 @@ links.tiddlywiki.com
 <div tags="$:/tags/PageSection" title="$:/_Templates/Section/Footer">
 <pre>&lt;footer class=&quot;tc-section-footer&quot;&gt;
 &lt;p&gt;
-[[links.tiddlywiki.com on GitHub|https://github.com/TiddlyWikiLinks/TiddlyWikiLinks]]
-&lt;/p&gt;&lt;p&gt;
 Last update: &lt;$text text={{{ [tag[$:/tags/Link]!sort[modified]get[modified]limit[1]format:date{$:/language/Tiddler/DateFormat}] }}}/&gt;
 &lt;/p&gt;
 &lt;p&gt;
 Also available in &lt;a href={{{ [[./wiki.html]addprefix&lt;tv-path-to-root&gt;] }}}&gt;~TiddlyWiki format&lt;/a&gt;
+&lt;/p&gt;
+&lt;p&gt;
+Join the development of [[TiddlyWikiLinks on GitHub|https://github.com/TiddlyWikiLinks/TiddlyWikiLinks]]
 &lt;/p&gt;
 &lt;/footer&gt;
 </pre>

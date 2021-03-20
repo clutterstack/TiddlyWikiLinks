@@ -422,7 +422,7 @@ pre > code {
 }/*
 Page Layout
 */.tc-section-branding {
-    padding: 1em 1em 0 1em;
+    padding: 3em 1em 0 1em;
     background-color: #DB3D69;
 }.tc-section-branding img {
     vertical-align: text-bottom;
@@ -460,9 +460,9 @@ Rich links
     text-decoration: none;    
 }.tc-richlink-link-target:hover {
     background-color: #DBA512;    
-}.tc-richlink-link-info {
+}.tc-richlink-link-target {
     vertical-align: middle;
-}.tc-richlink-link-info svg {
+}.tc-richlink-link-target svg {
     width: 1em;
     height: 1em;
 }.tc-richlink-topic a {
