@@ -318,7 +318,8 @@ Parameters:
 &lt;meta name=&quot;apple-mobile-web-app-status-bar-style&quot; content=&quot;black-translucent&quot; /&gt;
 &lt;meta name=&quot;mobile-web-app-capable&quot; content=&quot;yes&quot;/&gt;
 &lt;meta name=&quot;format-detection&quot; content=&quot;telephone=no&quot;&gt;
-&lt;link rel=&quot;stylesheet&quot; href=&quot;../../styles.css&quot;&gt;
+&lt;link id=&quot;faviconLink&quot; rel=&quot;shortcut icon&quot; href=&quot;`&lt;$text text=&lt;&lt;tv-path-to-root&gt;&gt;/&gt;`favicon.ico&quot;&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;`&lt;$text text=&lt;&lt;tv-path-to-root&gt;&gt;/&gt;`styles.css&quot;&gt;
 &lt;title&gt;`&lt;$view field=&quot;caption&quot;&gt;&lt;$view field=&quot;title&quot;/&gt;&lt;/$view&gt;: {{$:/core/wiki/title}}`&lt;/title&gt;
 &lt;/head&gt;
 &lt;body class=&quot;tc-body&quot;&gt;
@@ -501,7 +502,7 @@ Parameters:
 </div>
 <div tags="$:/tags/PageSection" title="$:/_Templates/Section/Branding">
 <pre>&lt;aside&gt;
-&lt;a href={{{ [&lt;tv-path-root&gt;addsuffix[/]] }}}&gt;[img width=200 [$:/_Images/JackInLinks.svg]]&lt;/a&gt;
+&lt;a href={{{ [&lt;tv-path-to-root&gt;] }}}&gt;[img width=200 [$:/_Images/JackInLinks.svg]]&lt;/a&gt;
 &lt;/aside&gt;
 </pre>
 </div>
