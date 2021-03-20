@@ -320,7 +320,7 @@ Parameters:
 &lt;meta name=&quot;format-detection&quot; content=&quot;telephone=no&quot;&gt;
 &lt;link id=&quot;faviconLink&quot; rel=&quot;shortcut icon&quot; href=&quot;`&lt;$text text=&lt;&lt;tv-path-to-root&gt;&gt;/&gt;`favicon.ico&quot;&gt;
 &lt;link rel=&quot;stylesheet&quot; href=&quot;`&lt;$text text=&lt;&lt;tv-path-to-root&gt;&gt;/&gt;`styles.css&quot;&gt;
-&lt;title&gt;`&lt;$view field=&quot;caption&quot;&gt;&lt;$view field=&quot;title&quot;/&gt;&lt;/$view&gt;: {{$:/core/wiki/title}}`&lt;/title&gt;
+&lt;title&gt;`&lt;$transclude tiddler=&lt;&lt;tv-page-content&gt;&gt; field=&quot;page-title&quot;/&gt;: {{$:/core/wiki/title}}`&lt;/title&gt;
 &lt;/head&gt;
 &lt;body class=&quot;tc-body&quot;&gt;
 `&lt;$list filter=&quot;[tag[$:/tags/PageSection]]&quot; variable=&quot;section&quot;&gt;&lt;$view tiddler=&lt;&lt;section&gt;&gt; format=&quot;htmlwikified&quot;/&gt;&lt;/$list&gt;`
@@ -329,7 +329,7 @@ Parameters:
 `
 </pre>
 </div>
-<div title="$:/_Templates/Page/Contributor">
+<div page-title="&lt;$text text={{!!name}}/&gt;'s Links" title="$:/_Templates/Page/Contributor">
 <pre>&lt;!--
 
 Render the details page for a contributor
@@ -359,7 +359,7 @@ Parameters:
 &lt;/$vars&gt;
 </pre>
 </div>
-<div title="$:/_Templates/Page/Index">
+<div page-title="Home" title="$:/_Templates/Page/Index">
 <pre>&lt;!--
 
 Render the index page
@@ -378,7 +378,7 @@ Number of unique URLs: &lt;$count filter=&quot;[tag[$:/tags/Link]each[url]]&quot
 Number of topics: &lt;$count filter=&quot;[tag[$:/tags/Link]tags[]] -[[$:/tags/Link]]&quot;/&gt;
 </pre>
 </div>
-<div title="$:/_Templates/Page/Link">
+<div page-title="&lt;$text text={{!!url}}/&gt;" title="$:/_Templates/Page/Link">
 <pre>&lt;!--
 
 Render the details page for a link
@@ -412,7 +412,7 @@ Parameters:
 &lt;/$vars&gt;
 </pre>
 </div>
-<div title="$:/_Templates/Page/Page">
+<div page-title="&lt;$text text=&lt;&lt;currentTiddler&gt;&gt;/&gt;" title="$:/_Templates/Page/Page">
 <pre>&lt;!--
 
 Render the details page for a top level page
@@ -426,7 +426,7 @@ Parameters:
 &lt;$transclude mode=&quot;block&quot;/&gt;
 </pre>
 </div>
-<div title="$:/_Templates/Page/Topic">
+<div page-title="&lt;$text text=&lt;&lt;currentTiddler&gt;&gt;/&gt; Links" title="$:/_Templates/Page/Topic">
 <pre>&lt;!--
 
 Render the details page for a topic
