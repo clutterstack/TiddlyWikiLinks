@@ -150,6 +150,8 @@ Error message and password prompt
 
 <li>$:/_Styles</li>
 
+<li>$:/_Templates/Components/LinkPanel</li>
+
 <li>$:/_Templates/Details/Contributor</li>
 
 <li>$:/_Templates/Details/Link</li>
@@ -317,7 +319,7 @@ modal-header-border: #eeeeee
 muted-foreground: #bbb
 notification-background: #ffffdd
 notification-border: #999999
-page-background: &lt;&lt;colour base-tertiary&gt;&gt;
+page-background: &lt;&lt;colour base-pale&gt;&gt;
 pre-background: #f5f5f5
 pre-border: #cccccc
 primary: #5778d8
@@ -438,7 +440,7 @@ html:-webkit-full-screen {
 
 body.tc-body {
 	font-size: 16px;
-	line-height: 1.2;
+	line-height: 1.4;
 	word-wrap: break-word;
 	color: &lt;&lt;colour foreground&gt;&gt;;
 	background-color: &lt;&lt;colour page-background&gt;&gt;;
@@ -456,7 +458,7 @@ h1 {
 
 h1, h2, h3, h4, h5, h6 {
 	line-height: 1.2;
-	font-weight: 300;
+	font-weight: bold;
 }
 
 pre {
@@ -586,6 +588,22 @@ table tfoot tr td {
 Page Layout
 */
 
+.tc-page-wrapper {
+    background-color: &lt;&lt;colour base-tertiary&gt;&gt;;
+}
+
+@media (min-width: 760px) {
+	.tc-page-wrapper {
+		width: 660px;
+		margin: 0 auto;
+	}
+}
+@media (max-width: 760px) {
+	.tc-page-wrapper {
+		margin: 0 0;
+	}
+}
+
 .tc-section-branding {
     padding: 3em 1em 0 1em;
     background-color: &lt;&lt;colour base-primary&gt;&gt;;
@@ -606,11 +624,13 @@ Page Layout
 }
 
 .tc-section-menu {
+    padding-top: 1em;
 }
 
 .tc-section-menu &gt; ul {
     list-style: none;
     margin: 0;
+    padding: 0 0 0 0.5em;
 }
 
 .tc-section-menu &gt; ul &gt; li {
@@ -639,14 +659,40 @@ Page Layout
 .tc-section-footer {
     padding: 1em;
     color: &lt;&lt;colour background&gt;&gt;;
+    background-color: &lt;&lt;colour base-tertiary&gt;&gt;;
+    border-top: 0.5em solid &lt;&lt;colour base-primary&gt;&gt;;
 }
 
 /*
 Rich links
 */
 
+.tc-richlink {
+    display: inline-block;
+}
+
+.tc-richlink a {
+    text-decoration: none;
+}
+
+.tc-richlink-contributor {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.tc-richlink-contributor img {
+    width: 1em;
+    height: 1em;
+}
+
+tc-richlink-contributor-name {
+}
+
 .tc-richlink-link {
     
+}
+
+.tc-richlink-link-info {
 }
 
 .tc-richlink-link-target {
@@ -666,6 +712,10 @@ Rich links
     height: 1em;
 }
 
+.tc-richlink-topic {
+    font-size: 0.8em;
+}
+
 .tc-richlink-topic a {
     display: inline-block;
     padding: 0.25em 0.5em;
@@ -675,7 +725,88 @@ Rich links
     background-color: &lt;&lt;colour base-secondary&gt;&gt;;
     color: &lt;&lt;colour background&gt;&gt;;
     font-weight: bold;
+}
+
+/*
+Details
+*/
+
+.tc-list-horizontal {
+    list-style: none;
+    padding: 0;
+}
+
+.tc-list-horizontal &gt; li {
+    display: inline;
+}
+
+.tc-list-vertical {
+    list-style: none;
+    padding: 0;
+}
+
+.tc-list-vertical &gt; li {
+    margin: 1em 0;
+}
+
+.tc-link-panel {
+    border: 1px solid &lt;&lt;colour muted-foreground&gt;&gt;;
+    border-radius: 0.25em;
+}
+
+.tc-link-panel &gt; .tc-link-panel-heading {
+    background-color: &lt;&lt;colour muted-foreground&gt;&gt;;
+    line-height: 1.7;
+    padding-left: 0.5em;
+}
+
+.tc-link-panel &gt; .tc-link-panel-heading &gt; .tc-link-panel-subheading {
+    font-size: 0.8em;
+}
+
+.tc-link-panel &gt; .tc-link-panel-body {
+    padding: 0.5em;
 }</pre>
+</div>
+<div title="$:/_Templates/Components/LinkPanel">
+<pre>&lt;!--
+
+Render the details of a particular link
+
+Parameters:
+
+    link-title: Title of a $:/tags/Link tiddler
+    tv-linkpanel-show-contributor: yes/no
+    tv-linkpanel-show-url: yes/no
+    tv-path-to-root: Optional relative path to get to the root of the site
+
+--&gt;
+&lt;div class=&quot;tc-link-panel&quot;&gt;
+&lt;$vars contributor={{{ [&lt;link-title&gt;get[origin]] }}}&gt;
+&lt;div class=&quot;tc-link-panel-heading&quot;&gt;
+&lt;$list filter=&quot;[&lt;tv-linkpanel-show-contributor&gt;match[yes]]&quot; variable=&quot;ignore&quot;&gt;
+{{$:/_Templates/RichLink/Contributor}}
+&lt;/$list&gt;
+&lt;$list filter=&quot;[&lt;tv-linkpanel-show-url&gt;match[yes]]&quot; variable=&quot;ignore&quot;&gt;
+{{$:/_Templates/RichLink/Link}}
+&lt;/$list&gt;
+&lt;span  class=&quot;tc-link-panel-subheading&quot;&gt;
+on &lt;$view tiddler=&lt;&lt;link-title&gt;&gt; field=&quot;modified&quot; format=&quot;date&quot; template={{$:/language/Tiddler/DateFormat}}/&gt;
+&lt;/span&gt;
+&lt;/div&gt;
+&lt;div class=&quot;tc-link-panel-body&quot;&gt;
+&lt;ul class=&quot;tc-list-horizontal&quot;&gt;
+&lt;$list filter=&quot;[&lt;link-title&gt;tags[]] -[[$:/tags/Link]] +[sortsub[]]&quot; variable=&quot;topic&quot;&gt;
+&lt;li&gt;
+{{$:/_Templates/RichLink/Topic}}
+&lt;/li&gt;
+&lt;/$list&gt;
+&lt;/ul&gt;
+&lt;$transclude tiddler=&lt;&lt;link-title&gt;&gt; mode=&quot;inline&quot;/&gt;
+&lt;/div&gt;
+&lt;/$vars&gt;
+&lt;/div&gt;
+</pre>
 </div>
 <div title="$:/_Templates/Details/Contributor">
 <pre>&lt;!--
@@ -689,9 +820,23 @@ Parameters:
 
 --&gt;
 &lt;$vars currentTiddler={{{ [tag[$:/tags/LinkSource]name&lt;contributor&gt;] }}}&gt;
-&lt;h1&gt;&lt;$text text={{!!caption}}/&gt;&lt;/h1&gt;
-&lt;a href={{!!url}} target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;&gt;&lt;$text text={{!!url}}/&gt;&lt;/a&gt;
+&lt;h1&gt;{{$:/_Templates/RichLink/Contributor}}&lt;/h1&gt;
+&lt;p&gt;
+Link source: &lt;a href={{!!url}} target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;&gt;&lt;$text text={{!!url}}/&gt;&lt;/a&gt;
+&lt;/p&gt;
+&lt;p&gt;
 &lt;$transclude mode=&quot;inline&quot;/&gt;
+&lt;/p&gt;
+
+&lt;ul class=&quot;tc-list-vertical&quot;&gt;
+&lt;$list filter=&quot;[tag[$:/tags/Link]field:origin&lt;contributor&gt;!sort[modified]]&quot; variable=&quot;link-title&quot;&gt;
+&lt;li&gt;
+&lt;$vars tv-linkpanel-show-contributor=&quot;no&quot; tv-linkpanel-show-url=&quot;yes&quot;&gt;
+{{$:/_Templates/Components/LinkPanel}}
+&lt;/$vars&gt;
+&lt;/li&gt;
+&lt;/$list&gt;
+&lt;/ul&gt;
 &lt;/$vars&gt;
 </pre>
 </div>
@@ -707,9 +852,34 @@ Parameters:
 
 --&gt;
 &lt;$vars url={{{ [&lt;link-title&gt;get[url]] }}}&gt;
-&lt;h1&gt;&lt;a href=&lt;&lt;url&gt;&gt; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;&gt;&lt;$text text=&lt;&lt;url&gt;&gt;/&gt;&lt;/a&gt;&lt;/h1&gt;
 
-Count: &lt;$count filter=&quot;[tag[$:/tags/Link]url&lt;url&gt;]&quot;/&gt;
+&lt;h1&gt;{{$:/_Templates/RichLink/Link}}&lt;/h1&gt;
+
+Bookmarked under these topics:
+
+&lt;ul class=&quot;tc-list-horizontal&quot;&gt;
+&lt;$vars sortFilter=&quot;[all[tiddlers+shadows]tag[$:/tags/Link]field:url&lt;url&gt;tag&lt;currentTiddler&gt;count[]]&quot;&gt;
+&lt;$list filter=&quot;[tag[$:/tags/Link]field:url&lt;url&gt;tags[]] -[[$:/tags/Link]] +[!sortsub:number&lt;sortFilter&gt;]&quot; variable=&quot;topic&quot;&gt;
+&lt;li&gt;
+&lt;$vars count={{{ [tag[$:/tags/Link]field:url&lt;url&gt;tag&lt;topic&gt;count[]] }}}&gt;
+{{$:/_Templates/RichLink/Topic}}
+&lt;/$vars&gt;
+&lt;/li&gt;
+&lt;/$list&gt;
+&lt;/$vars&gt;
+&lt;/ul&gt;
+
+Bookmarked by &lt;$count filter=&quot;[tag[$:/tags/Link]url&lt;url&gt;]&quot;/&gt; contributor(s):
+
+&lt;ul class=&quot;tc-list-vertical&quot;&gt;
+&lt;$list filter=&quot;[tag[$:/tags/Link]field:url&lt;url&gt;!sort[created]]&quot; variable=&quot;link-title&quot;&gt;
+&lt;li&gt;
+&lt;$vars tv-linkpanel-show-contributor=&quot;yes&quot; tv-linkpanel-show-url=&quot;no&quot;&gt;
+{{$:/_Templates/Components/LinkPanel}}
+&lt;/$vars&gt;
+&lt;/li&gt;
+&lt;/$list&gt;
+&lt;/ul&gt;
 &lt;/$vars&gt;
 </pre>
 </div>
@@ -724,7 +894,28 @@ Parameters:
     tv-path-to-root: Optional relative path to get to the root of the site
 
 --&gt;
-{{$:/_Templates/RichLink/Topic}}
+&lt;h1&gt;{{$:/_Templates/RichLink/Topic}}&lt;/h1&gt;
+
+Links in this topic:
+
+&lt;ul class=&quot;tc-list-vertical&quot;&gt;
+&lt;$list filter=&quot;[tag[$:/tags/Link]tag&lt;topic&gt;each[url]sort[url]]&quot; variable=&quot;link-title&quot;&gt;
+&lt;$set name=&quot;url&quot; value={{{ [&lt;link-title&gt;get[url]] }}}&gt;
+&lt;li&gt;
+&lt;h2&gt;{{$:/_Templates/RichLink/Link}}&lt;/h2&gt;
+&lt;ul class=&quot;tc-list-vertical&quot;&gt;
+&lt;$list filter=&quot;[tag[$:/tags/Link]tag&lt;topic&gt;url&lt;url&gt;!sort[modified]]&quot; variable=&quot;link-title&quot;&gt;
+&lt;li&gt;
+&lt;$vars tv-linkpanel-show-contributor=&quot;yes&quot; tv-linkpanel-show-url=&quot;no&quot;&gt;
+{{$:/_Templates/Components/LinkPanel}}
+&lt;/$vars&gt;
+&lt;/li&gt;
+&lt;/$list&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/$set&gt;
+&lt;/$list&gt;
+&lt;/ul&gt;
 </pre>
 </div>
 <div title="$:/_Templates/HTML">
@@ -746,7 +937,9 @@ Parameters:
 &lt;title&gt;`&lt;$transclude tiddler=&lt;&lt;tv-page-content&gt;&gt; field=&quot;page-title&quot;/&gt;: {{$:/core/wiki/title}}`&lt;/title&gt;
 &lt;/head&gt;
 &lt;body class=&quot;tc-body&quot;&gt;
+&lt;div class=&quot;tc-page-wrapper&quot;&gt;
 `&lt;$list filter=&quot;[tag[$:/tags/PageSection]]&quot; variable=&quot;section&quot;&gt;&lt;$view tiddler=&lt;&lt;section&gt;&gt; format=&quot;htmlwikified&quot; mode=&quot;inline&quot;/&gt;&lt;/$list&gt;`
+&lt;/div&gt;
 &lt;/body&gt;
 &lt;/html&gt;
 `
@@ -765,20 +958,6 @@ Parameters:
 --&gt;
 &lt;$vars contributor={{!!name}}&gt;
 {{$:/_Templates/Details/Contributor}}
-&lt;ul&gt;
-&lt;$list filter=&quot;[tag[$:/tags/Link]field:origin&lt;contributor&gt;sort[url]]&quot; variable=&quot;link-title&quot;&gt;
-&lt;li&gt;
-{{$:/_Templates/RichLink/Link}}
-&lt;ul&gt;
-&lt;$list filter=&quot;[&lt;link-title&gt;tags[]] -[[$:/tags/Link]] +[sort[]]&quot; variable=&quot;topic&quot;&gt;
-&lt;li&gt;
-{{$:/_Templates/RichLink/Topic}}
-&lt;/li&gt;
-&lt;/$list&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/$list&gt;
-&lt;/ul&gt;
 &lt;/$vars&gt;
 </pre>
 </div>
@@ -792,13 +971,7 @@ Parameters:
     tv-path-to-root: Optional relative path to get to the root of the site
 
 --&gt;
-Number of &lt;a href={{{ [[./pages/contributors]addprefix&lt;tv-path-to-root&gt;] }}}&gt;contributors&lt;/a&gt;: &lt;$count filter=&quot;[tag[$:/tags/LinkSource]]&quot;/&gt;
-
-Number of &lt;a href={{{ [[./pages/links]addprefix&lt;tv-path-to-root&gt;] }}}&gt;links&lt;/a&gt;: &lt;$count filter=&quot;[tag[$:/tags/Link]]&quot;/&gt;
-
-Number of &lt;a href={{{ [[./pages/links]addprefix&lt;tv-path-to-root&gt;] }}}&gt;unique&lt;/a&gt; URLs: &lt;$count filter=&quot;[tag[$:/tags/Link]each[url]]&quot;/&gt;
-
-Number of &lt;a href={{{ [[./pages/topics]addprefix&lt;tv-path-to-root&gt;] }}}&gt;topics&lt;/a&gt;: &lt;$count filter=&quot;[tag[$:/tags/Link]tags[]] -[[$:/tags/Link]]&quot;/&gt;
+&lt;$transclude tiddler=&quot;HelloThere&quot; mode=&quot;block&quot;/&gt;
 </pre>
 </div>
 <div page-title="&lt;$text text={{!!url}}/&gt;" title="$:/_Templates/Page/Link">
@@ -815,22 +988,6 @@ Parameters:
 &lt;$vars link-title=&lt;&lt;currentTiddler&gt;&gt;&gt;
 &lt;$vars url={{{ [&lt;link-title&gt;get[url]] }}}&gt;
 {{$:/_Templates/Details/Link}}
-&lt;ul&gt;
-&lt;$list filter=&quot;[tag[$:/tags/Link]field:url&lt;url&gt;tags[]] -[[$:/tags/Link]] +[sort[]]&quot; variable=&quot;topic&quot;&gt;
-&lt;li&gt;
-{{$:/_Templates/RichLink/Topic}}
-&lt;ul&gt;
-&lt;$list filter=&quot;[tag[$:/tags/Link]tag&lt;topic&gt;url&lt;url&gt;sort[origin]]&quot; variable=&quot;link-title&quot;&gt;
-&lt;li&gt;
-&lt;$vars contributor={{{ [&lt;link-title&gt;get[origin]] }}}&gt;
-{{$:/_Templates/RichLink/Contributor}}: &lt;$transclude tiddler=&lt;&lt;link-title&gt;&gt; mode=&quot;inline&quot;/&gt;
-&lt;/$vars&gt;
-&lt;/li&gt;
-&lt;/$list&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/$list&gt;
-&lt;/ul&gt;
 &lt;/$vars&gt;
 &lt;/$vars&gt;
 </pre>
@@ -862,22 +1019,6 @@ Parameters:
 --&gt;
 &lt;$vars topic=&lt;&lt;currentTiddler&gt;&gt;&gt;
 {{$:/_Templates/Details/Topic}}
-&lt;ul&gt;
-&lt;$list filter=&quot;[tag[$:/tags/Link]tag&lt;topic&gt;each[url]sort[url]]&quot; variable=&quot;link-title&quot;&gt;
-&lt;$set name=&quot;url&quot; value={{{ [&lt;link-title&gt;get[url]] }}}&gt;
-&lt;li&gt;
-{{$:/_Templates/RichLink/Link}}
-&lt;ul&gt;
-&lt;$list filter=&quot;[tag[$:/tags/Link]tag&lt;topic&gt;url&lt;url&gt;]&quot; variable=&quot;link&quot;&gt;
-&lt;li&gt;
-''&lt;$vars contributor={{{ [&lt;link&gt;get[origin]] }}}&gt;&lt;$transclude tiddler=&quot;$:/_Templates/RichLink/Contributor&quot;/&gt;&lt;/$vars&gt;'': &lt;$transclude tiddler=&lt;&lt;link&gt;&gt; mode=&quot;inline&quot;/&gt;
-&lt;/li&gt;
-&lt;/$list&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/$set&gt;
-&lt;/$list&gt;
-&lt;/ul&gt;
 &lt;/$vars&gt;
 </pre>
 </div>
@@ -892,9 +1033,10 @@ Parameters:
     tv-path-to-root: Optional relative path to get to the root of the site
 
 --&gt;
-&lt;div class=&quot;tc-richlink-contributor&quot;&gt;
+&lt;div class=&quot;tc-richlink tc-richlink-contributor&quot;&gt;
 &lt;a href={{{ [&lt;contributor&gt;addprefix[contributors/]addprefix&lt;tv-path-to-root&gt;] }}}&gt;
-&lt;$image source={{{ [&lt;contributor&gt;addprefix[$:/config/avatars/]] }}} width=32px height=32px/&gt; &lt;$text text=&lt;&lt;contributor&gt;&gt;/&gt;
+&lt;$image source={{{ [&lt;contributor&gt;addprefix[$:/config/avatars/]] }}} width=32px height=32px/&gt;
+&lt;span class=&quot;tc-richlink-contributor-name&quot;&gt;&lt;$text text=&lt;&lt;contributor&gt;&gt;/&gt;&lt;/span&gt;
 &lt;/a&gt;
 &lt;/div&gt;
 </pre>
@@ -910,7 +1052,7 @@ Parameters:
     tv-path-to-root: Optional relative path to get to the root of the site
 
 --&gt;
-&lt;div class=&quot;tc-richlink-link&quot;&gt;
+&lt;div class=&quot;tc-richlink tc-richlink-link&quot;&gt;
 &lt;$vars url={{{ [&lt;link-title&gt;get[url]] }}}&gt;
 &lt;a href={{{ [&lt;link-title&gt;get[url-hash]addprefix[urls/]addprefix&lt;tv-path-to-root&gt;] }}} class=&quot;tc-richlink-link-info&quot; title=&quot;Show link info&quot;&gt;&lt;$text text=&lt;&lt;url&gt;&gt;/&gt;&lt;/a&gt;
 &lt;a href=&lt;&lt;url&gt;&gt; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot; class=&quot;tc-richlink-link-target&quot; title=&lt;&lt;url&gt;&gt;&gt;{{$:/core/images/open-window}}&lt;/a&gt;
@@ -919,25 +1061,34 @@ Parameters:
 </pre>
 </div>
 <div title="$:/_Templates/RichLink/Topic">
-<pre>&lt;!--
+<pre>\whitespace trim
+&lt;!--
 
 Render a rich link to the details page relating to a particular topic
 
 Parameters:
 
     topic: Name of the topic
+    count: optional count to be displayed
     tv-path-to-root: Optional relative path to get to the root of the site
 
 --&gt;
-&lt;div class=&quot;tc-richlink-topic&quot;&gt;
-&lt;a href={{{ [&lt;topic&gt;slugify[]addprefix[topics/]addprefix&lt;tv-path-to-root&gt;] }}}&gt;&lt;$text text=&lt;&lt;topic&gt;&gt;/&gt;&lt;/a&gt;
+&lt;div class=&quot;tc-richlink tc-richlink-topic&quot;&gt;
+&lt;a href={{{ [&lt;topic&gt;slugify[]addprefix[topics/]addprefix&lt;tv-path-to-root&gt;] }}}&gt;
+&lt;$text text=&lt;&lt;topic&gt;&gt;/&gt;
+&lt;$list filter=&quot;[&lt;count&gt;!match[]]&quot; variable=&quot;none&quot;&gt;
+&lt;$text text=&quot; (&quot;/&gt;
+&lt;$text text=&lt;&lt;count&gt;&gt;/&gt;
+&lt;$text text=&quot;)&quot;/&gt;
+&lt;/$list&gt;
+&lt;/a&gt;
 &lt;/div&gt;</pre>
 </div>
 <div tags="$:/tags/PageSection" title="$:/_Templates/Section/Branding">
 <pre>\whitespace trim
 &lt;header class=&quot;tc-section-branding&quot;&gt;
 &lt;a href={{{ [&lt;tv-path-to-root&gt;] }}}&gt;
-[img width=150 [$:/_Images/JackInLinks.svg]]
+[img width=95 [$:/_Images/JackInLinks.svg]]
 &lt;span class=&quot;tc-section-branding-text&quot;&gt;
 ~TiddlyWikiLinks
 &lt;/span&gt;
@@ -10891,9 +11042,7 @@ Join the development of [[TiddlyWikiLinks on GitHub|https://github.com/TiddlyWik
 Topics
 Links
 Contributors
-ReportingAbuse
-HowToContribute
-CodeOfConduct
+About
 </pre>
 </div>
 <div title="$:/favicon.ico" type="image/png">
@@ -10984,7 +11133,7 @@ CodeOfConduct
 <div title="$:/status/RequireReloadDueToPluginChange">
 <pre>no</pre>
 </div>
-<div list="HelloThere Topics Links Contributors ReportingAbuse HowToContribute CodeOfConduct" title="$:/StoryList">
+<div list="HelloThere Topics Links Contributors About" title="$:/StoryList">
 <pre></pre>
 </div>
 <div list="Links Topics Contributors HowToContribute" title="$:/tags/Page">
@@ -11103,95 +11252,106 @@ CodeOfConduct
 }</pre>
 </div>
 <div tags="$:/tags/Page" title="About">
-<pre>* $:/SiteTitle and $:/SiteSubtitle must be plain text
-* It is acceptable to post links to your own stuff
+<pre>!! How This Site Works
+
+This site aggregates links curated by individual members of the ~TiddlyWiki community. It lets you see the latest links, and explore them through categories and timelines.
+
+This site works best with a crowd of people posting links. The pressure on individuals is reduced because not everybody needs to catch every interesting link that flies past. The aggregation effects reduce the impact of mistakes. For example, if one person mis-tags a link under an inappropriate topic, the site will show that only one person added that tag, versus the majority using more appropriate tags. In that way, we hope that a sort of wisdom of the crowds will emerge, with consensus emerging as to the most useful ways to describe and categorise links.
+
+!! How To Contribute
+
+We invite you to become a contributing editor for ~TiddlyWikiLinks.
+
+The technical requirement is that you must maintain a publicly accessible ~TiddlyWiki containing the links. The URL of your site must be registered in the [[sites.json|https://github.com/TiddlyWikiLinks/TiddlyWikiLinks/blob/main/sites/sites.json]] file in the ~GitHub repository. You can go ahead and add yourself if you know how to send a ~GitHub pull request, or you can post a message to the forum asking for somebody else to create the PR on your behalf. The information needed in [[sites.json|https://github.com/TiddlyWikiLinks/TiddlyWikiLinks/blob/main/sites/sites.json]] is:
+
+* Your username
+* The URL of your site
+
+The links must be stored as individual tiddlers tagged `$:/tags/Link` with the following fields:
+
+* ''created'' -- the timestamp the link was created
+* ''modified'' -- the timestamp the link was updated
+* ''tags'' -- the tag `$:/tags/Link` plus any other tags to describe the link
+* ''text'' -- a brief comment describing the link that may only use inline formatting
+* ''title'' -- ignored by the system
+* ''url'' -- the URL of the link
+
+Your wiki should also have the following system tiddlers:
+
+* ''~$:/favicon.ico'' -- small square image used as your avator
+* ''~$:/SiteTitle'' -- a brief description of your links collection (must be plain text)
+* ''~$:/SiteSubtitle'' -- a longer description of your links collection (must be plain text)
+
+!! Code of Conduct
+
+* Do not use this platform to criticize or harass other people
+* Do not post links to offensive or illegal content
+* It is perfectly acceptable to post links to your own material, but please make it clear that that is the case
 </pre>
 </div>
 <div tags="$:/tags/Page" title="Contributors">
-<pre>&lt;$list filter=&quot;[tag[$:/tags/Link]each[origin]get[origin]sort[]]&quot; variable=&quot;contributor&quot;&gt;
+<pre>&lt;ul class=&quot;tc-list-vertical&quot;&gt;
+&lt;$list filter=&quot;[tag[$:/tags/Link]each[origin]get[origin]sort[]]&quot; variable=&quot;contributor&quot;&gt;
 &lt;$set name=&quot;source&quot; value={{{ [tag[$:/tags/LinkSource]field:name&lt;contributor&gt;] }}}&gt;
-&lt;h1&gt;{{$:/_Templates/RichLink/Contributor}}&lt;/h1&gt;
-&lt;p&gt;
-&lt;$text text={{{ [&lt;source&gt;get[text]] }}}/&gt;
-&lt;/p&gt;
-&lt;ul&gt;
-&lt;$list filter=&quot;[tag[$:/tags/Link]field:origin&lt;contributor&gt;sort[url]]&quot; variable=&quot;link-title&quot;&gt;
-&lt;li&gt;
-{{$:/_Templates/RichLink/Link}}
-&lt;ul&gt;
-&lt;$list filter=&quot;[&lt;link-title&gt;tags[]] -[[$:/tags/Link]] +[sort[]]&quot; variable=&quot;topic&quot;&gt;
-&lt;li&gt;
-{{$:/_Templates/RichLink/Topic}}
-&lt;/li&gt;
-&lt;/$list&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/$list&gt;
-&lt;/ul&gt;
+&lt;li&gt;{{$:/_Templates/RichLink/Contributor}}&lt;/li&gt;
 &lt;/$set&gt;
 &lt;/$list&gt;
+&lt;/ul&gt;
 </pre>
 </div>
 <div title="HelloThere">
 <pre>!! Welcome to the ~TiddlyWiki Links Aggregator
 
-This site is a collection of links to useful and interesting ~TiddlyWiki material.
+This site is a collection of links to useful and interesting ~TiddlyWiki material curated by our team of community editors.
 
-The links are curated by our team of community editors:
+!! Recent Updates
 
-&lt;ul&gt;
-&lt;$list filter=&quot;[tag[$:/tags/LinkSource]sort[name]]&quot;&gt;
+The most recently updated links.
+
+&lt;$vars subfilter=&quot;[tag[$:/tags/Link]]&quot;&gt;
+&lt;$list filter=&quot;[subfilter&lt;subfilter&gt;has[modified]!sort[modified]limit[100]eachday[modified]]&quot;&gt;
+&lt;h3&gt;&lt;$view field=&quot;modified&quot; format=&quot;date&quot; template=&quot;DDth MMM YYYY&quot;/&gt;&lt;/h3&gt;
+&lt;ul class=&quot;tc-list-vertical&quot;&gt;
+&lt;$list filter=&quot;[sameday:modified{!!modified}subfilter&lt;subfilter&gt;!sort[modified]]&quot;&gt;
 &lt;li&gt;
-''&lt;$text text={{!!name}}/&gt;'' -- &lt;$text text={{!!text}}/&gt;&lt;br&gt;
-&lt;a href={{!!url}} target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;&gt;&lt;$text text={{!!url}}/&gt;&lt;/a&gt;
-&lt;/li&gt;
-&lt;/$list&gt;
-&lt;/ul&gt;
-</pre>
-</div>
-<div tags="$:/tags/Page" title="Links">
-<pre>&lt;$list filter=&quot;[tag[$:/tags/Link]each[url]sort[url]]&quot; variable=&quot;link-title&quot;&gt;
-&lt;$set name=&quot;url&quot; value={{{ [&lt;link-title&gt;get[url]] }}}&gt;
-&lt;h1&gt;{{$:/_Templates/RichLink/Link}}&lt;/h1&gt;
-&lt;ul&gt;
-&lt;$list filter=&quot;[tag[$:/tags/Link]field:url&lt;url&gt;tags[]] -[[$:/tags/Link]] +[sort[]]&quot; variable=&quot;topic&quot;&gt;
-&lt;li&gt;
-{{$:/_Templates/RichLink/Topic}}
-&lt;ul&gt;
-&lt;$list filter=&quot;[tag[$:/tags/Link]tag&lt;topic&gt;url&lt;url&gt;sort[origin]]&quot; variable=&quot;link-title&quot;&gt;
-&lt;li&gt;
-&lt;$vars contributor={{{ [&lt;link-title&gt;get[origin]] }}}&gt;
-{{$:/_Templates/RichLink/Contributor}}: &lt;$transclude tiddler=&lt;&lt;link-title&gt;&gt; mode=&quot;inline&quot;/&gt;
+&lt;$vars link-title=&lt;&lt;currentTiddler&gt;&gt; tv-linkpanel-show-contributor=&quot;yes&quot; tv-linkpanel-show-url=&quot;yes&quot;&gt;
+{{$:/_Templates/Components/LinkPanel}}
 &lt;/$vars&gt;
 &lt;/li&gt;
 &lt;/$list&gt;
 &lt;/ul&gt;
-&lt;/li&gt;
+&lt;/$list&gt;
+&lt;/$vars&gt;
+
+!! Statistics
+
+Number of &lt;a href={{{ [[./pages/contributors]addprefix&lt;tv-path-to-root&gt;] }}}&gt;contributors&lt;/a&gt;: &lt;$count filter=&quot;[tag[$:/tags/LinkSource]]&quot;/&gt;
+
+Number of &lt;a href={{{ [[./pages/links]addprefix&lt;tv-path-to-root&gt;] }}}&gt;links&lt;/a&gt;: &lt;$count filter=&quot;[tag[$:/tags/Link]]&quot;/&gt;
+
+Number of unique &lt;a href={{{ [[./pages/links]addprefix&lt;tv-path-to-root&gt;] }}}&gt;URLs&lt;/a&gt;: &lt;$count filter=&quot;[tag[$:/tags/Link]each[url]]&quot;/&gt;
+
+Number of &lt;a href={{{ [[./pages/topics]addprefix&lt;tv-path-to-root&gt;] }}}&gt;topics&lt;/a&gt;: &lt;$count filter=&quot;[tag[$:/tags/Link]tags[]] -[[$:/tags/Link]]&quot;/&gt;
+
+</pre>
+</div>
+<div tags="$:/tags/Page" title="Links">
+<pre>&lt;ul class=&quot;tc-list-vertical&quot;&gt;
+&lt;$list filter=&quot;[tag[$:/tags/Link]each[url]sort[url]]&quot; variable=&quot;link-title&quot;&gt;
+&lt;$set name=&quot;url&quot; value={{{ [&lt;link-title&gt;get[url]] }}}&gt;
+&lt;li&gt;{{$:/_Templates/RichLink/Link}}&lt;/li&gt;
+&lt;/$set&gt;
 &lt;/$list&gt;
 &lt;/ul&gt;
-&lt;/$set&gt;
-&lt;/$list&gt;</pre>
+</pre>
 </div>
 <div tags="$:/tags/Page" title="Topics">
-<pre>&lt;$list filter=&quot;[tag[$:/tags/Link]tags[]] -[[$:/tags/Link]] +[sort[]]&quot; variable=&quot;topic&quot;&gt;
-{{$:/_Templates/RichLink/Topic}}
-&lt;ul&gt;
-&lt;$list filter=&quot;[tag[$:/tags/Link]tag&lt;topic&gt;each[url]sort[url]]&quot; variable=&quot;link-title&quot;&gt;
-&lt;$set name=&quot;url&quot; value={{{ [&lt;link-title&gt;get[url]] }}}&gt;
-&lt;li&gt;
-{{$:/_Templates/RichLink/Link}}
-&lt;ul&gt;
-&lt;$list filter=&quot;[tag[$:/tags/Link]tag&lt;topic&gt;url&lt;url&gt;]&quot; variable=&quot;link&quot;&gt;
-&lt;li&gt;
-''&lt;$vars contributor={{{ [&lt;link&gt;get[origin]] }}}&gt;&lt;$transclude tiddler=&quot;$:/_Templates/RichLink/Contributor&quot;/&gt;&lt;/$vars&gt;'': &lt;$transclude tiddler=&lt;&lt;link&gt;&gt; mode=&quot;inline&quot;/&gt;
-&lt;/li&gt;
+<pre>&lt;ul class=&quot;tc-list-vertical&quot;&gt;
+&lt;$list filter=&quot;[tag[$:/tags/Link]tags[]] -[[$:/tags/Link]] +[sort[]]&quot; variable=&quot;topic&quot;&gt;
+&lt;li&gt;{{$:/_Templates/RichLink/Topic}}&lt;/li&gt;
 &lt;/$list&gt;
 &lt;/ul&gt;
-&lt;/li&gt;
-&lt;/$set&gt;
-&lt;/$list&gt;
-&lt;/ul&gt;
-&lt;/$list&gt;</pre>
+</pre>
 </div>
 
 
