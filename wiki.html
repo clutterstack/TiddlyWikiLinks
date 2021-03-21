@@ -11304,6 +11304,16 @@ Your wiki should also have the following system tiddlers:
 
 This site is a collection of links to useful and interesting ~TiddlyWiki material curated by our team of community editors.
 
+!! Statistics
+
+Number of &lt;a href={{{ [[./pages/contributors]addprefix&lt;tv-path-to-root&gt;] }}}&gt;contributors&lt;/a&gt;: &lt;$count filter=&quot;[tag[$:/tags/LinkSource]]&quot;/&gt;
+
+Number of &lt;a href={{{ [[./pages/links]addprefix&lt;tv-path-to-root&gt;] }}}&gt;links&lt;/a&gt;: &lt;$count filter=&quot;[tag[$:/tags/Link]]&quot;/&gt;
+
+Number of unique &lt;a href={{{ [[./pages/links]addprefix&lt;tv-path-to-root&gt;] }}}&gt;URLs&lt;/a&gt;: &lt;$count filter=&quot;[tag[$:/tags/Link]each[url]]&quot;/&gt;
+
+Number of &lt;a href={{{ [[./pages/topics]addprefix&lt;tv-path-to-root&gt;] }}}&gt;topics&lt;/a&gt;: &lt;$count filter=&quot;[tag[$:/tags/Link]tags[]] -[[$:/tags/Link]]&quot;/&gt;
+
 !! Recent Updates
 
 The most recently updated links.
@@ -11322,17 +11332,6 @@ The most recently updated links.
 &lt;/ul&gt;
 &lt;/$list&gt;
 &lt;/$vars&gt;
-
-!! Statistics
-
-Number of &lt;a href={{{ [[./pages/contributors]addprefix&lt;tv-path-to-root&gt;] }}}&gt;contributors&lt;/a&gt;: &lt;$count filter=&quot;[tag[$:/tags/LinkSource]]&quot;/&gt;
-
-Number of &lt;a href={{{ [[./pages/links]addprefix&lt;tv-path-to-root&gt;] }}}&gt;links&lt;/a&gt;: &lt;$count filter=&quot;[tag[$:/tags/Link]]&quot;/&gt;
-
-Number of unique &lt;a href={{{ [[./pages/links]addprefix&lt;tv-path-to-root&gt;] }}}&gt;URLs&lt;/a&gt;: &lt;$count filter=&quot;[tag[$:/tags/Link]each[url]]&quot;/&gt;
-
-Number of &lt;a href={{{ [[./pages/topics]addprefix&lt;tv-path-to-root&gt;] }}}&gt;topics&lt;/a&gt;: &lt;$count filter=&quot;[tag[$:/tags/Link]tags[]] -[[$:/tags/Link]]&quot;/&gt;
-
 </pre>
 </div>
 <div tags="$:/tags/Page" title="Links">
